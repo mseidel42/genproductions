@@ -25,22 +25,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Build gridpack
+        run: docker run --rm -v /cvmfs:/cvmfs -v $PWD:$PWD -w $PWD gitlab-registry.cern.ch/cms-cloud/cmssw-docker/cc7-cms bin/Powheg/test/test_build.sh -r CMSSW_11_0_1 -p hvq
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          pwd
-          ls
-          cd ..
-
-      - name: Run another multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          pwd
-          ls
+      - name: Check pwg-stat.dat
+        run: git diff --exit-code bin/Powheg/test/hvq.dat
