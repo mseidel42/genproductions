@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  powheg:
     # The type of runner that the job will run on
     runs-on: [self-hosted, linux, x64]
 
@@ -29,4 +29,4 @@ jobs:
         run: docker run --rm -v /cvmfs:/cvmfs -v $PWD:$PWD -w $PWD gitlab-registry.cern.ch/cms-cloud/cmssw-docker/cc7-cms bash bin/Powheg/test/test_build.sh -r CMSSW_11_0_1 -p hvq
 
       - name: Check pwg-stat.dat
-        run: git diff --exit-code bin/Powheg/test/hvq.dat
+        run: git diff --exit-code bin/Powheg/test/pwg-stat.dat.hvq
