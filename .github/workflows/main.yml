@@ -36,3 +36,11 @@ jobs:
           echo test, and deploy your project.
           pwd
           ls
+          cd ..
+
+      - name: Run another multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+          pwd
+          ls
