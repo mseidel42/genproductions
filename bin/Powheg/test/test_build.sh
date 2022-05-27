@@ -36,6 +36,7 @@ echo "Powheg directory: $POWHEG_DIR"
 echo "Setting up $CMSSW_RELEASE in $BASE_DIR"
 mkdir -p $BASE_DIR
 cd $BASE_DIR
+source /cvmfs/cms.cern.ch/cmsset_default.sh
 /cvmfs/cms.cern.ch/common/scramv1 project CMSSW  $CMSSW_RELEASE
 if [ ! -e $CMSSW_RELEASE ]; then
     echo "Error: no CMSSW area"
