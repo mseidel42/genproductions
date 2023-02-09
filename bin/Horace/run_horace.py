@@ -50,6 +50,9 @@ def checkout(args):
         sys.exit(1)
 
     try:
+        # Unlock SSH key if running in background:
+        # eval "$(ssh-agent -s)"
+        # ssh-add ~/.ssh/id_rsa
         git.Git(args.dir).clone('ssh://git@gitlab.cern.ch:7999/mseidel/horace.git')
     except git.exc.GitCommandError as err:
         print(err)
