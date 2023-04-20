@@ -1,0 +1,164 @@
+*//////////////////////////////////////////////////////////////////////////////
+*//                                                                          //
+*//                      Input data for WINHAC                               //
+*//                     For Simple DEMO Program                              //
+*//                                                                          //
+*//////////////////////////////////////////////////////////////////////////////
+BeginX
+*<-i><----data-----><-------------------comments------------------------------>
+    1            7d3 Ecm    =xpar( 1) ! CMS total energy in GeV for pp or pp~
+    2      80.3815d0 aMW    =xpar( 2) ! W mass 
+    3       2.0904d0 GamW   =xpar( 3) ! W width, if GamW<0 it is RECALCULATED 
+*                                     !          inside the program
+    4      91.1535d0 aMZ    =xpar( 4) ! Z mass   
+    5       2.4932d0 GamZ   =xpar( 5) ! Z width  
+    6      0.23154d0 sW2    =xpar( 6) ! sin^2(theta_W), if sW2 < 0 it is      
+*                                     ! RECALCULATED in the program
+    9           1d-5 EgMin  =xpar( 9) ! Soft-photon cut-off in GeV
+*
+   11          3.5d3 En1    =xpar(11) ! Energy/nucleon for ion beam1 in GeV
+   12          3.5d3 En2    =xpar(12) ! Energy/nucleon for ion beam2 in GeV
+   13            2d0 A1     =xpar(13) ! Mass   number of ion beam1 
+   14            2d0 A2     =xpar(14) ! Mass   number of ion beam2
+   15            1d0 Z1     =xpar(15) ! Atomic number of ion beam1 
+   16            1d0 Z2     =xpar(16) ! Atomic number of ion beam2
+*
+   31           1d-6 x_min  =xpar(31) ! minimum of quarks x's
+   32            1d0 x_max  =xpar(32) ! maximum of quarks x's
+   33            1d0 Q2_min =xpar(33) ! minimum of quarks Q^2 [GeV^2]
+   51           10d0 WtMax  =xpar(51) ! maximum weight for rejection 
+*<-i><----data-----><-------------------comments------------------------------>
+*/////////////////////////////////////////////////////////////////////////
+*//    Values of the CKM matrix elements from 2018 PDG Review:          //
+*/////////////////////////////////////////////////////////////////////////
+  101      0.97446d0 VCKM(1,1) =xpar(111) ! V_ud  real part
+  102      0.22452d0 VCKM(1,2) =xpar(112) ! V_us  real part
+  103      0.00365d0 VCKM(1,3) =xpar(113) ! V_ub  real part
+  104     -0.22438d0 VCKM(2,1) =xpar(114) ! V_cd  real part
+  105      0.97359d0 VCKM(2,2) =xpar(115) ! V_cs  real part
+  106      0.04214d0 VCKM(2,3) =xpar(116) ! V_cb  real part
+  107      0.00896d0 VCKM(3,1) =xpar(117) ! V_td  real part
+  108     -0.04133d0 VCKM(3,2) =xpar(118) ! V_ts  real part
+  109     0.999105d0 VCKM(3,3) =xpar(119) ! V_tb  real part
+******************************************************************************
+*                     Various switches and options
+******************************************************************************
+* Some physical switches
+*<-i><----data-----><-------------------comments------------------------------>
+ 1001            4d0 KeyWmp =xpar(1001): choice of W: W- or W+ or both
+*                    =0: both W- and W+                   
+*                    =1: only W- 
+*                    =2: only W+ 
+*                    =3: Z+gamma, QED+EW corrections not available
+*                    =4: Z
+*                    =5: gamma
+ 1002            0d0 KeyQua =xpar(1002): choice of initial quarks
+*                    =0: any pair                              
+*                    =1: ud                              
+*                    =2: cs                              
+*                    =3: tb                              
+ 1003            2d0 KeyLep =xpar(1003): choice of final-state leptons
+*                    =0: electrons and muons
+*                    =1: electrons
+*                    =2: muons
+*                    =3: taus
+ 1004            0d0 KeyWid =xpar(1004): W-boson width scheme
+*                    =0: fixed width 
+*                    =1: running width  
+ 1005            1d0 KeyGmu =xpar(1005): input-parameter scheme (IPS)
+*                    =0: alpha-scheme
+*                    =1: G_mu-scheme (RECOMMENDED)
+ 1006            1d0 KeyCKM =xpar(1006): quark mixing matrix choice
+*                    =0: unit matrix (no mixing)
+*                    =1: full CKM matrix (RECOMMENDED)
+ 1007            0d0 KeyPol =xpar(1007): W-polarization choice
+*                    =0: Unpolarized W
+*                    =1: Trasversely    polarized W, i.e. W_T
+*                    =2: Longitudinally polarized W, i.e. W_L
+*                    =3: Right-handedly polarized W, i.e. W_RH
+*                    =4: Left-handedly  polarized W, i.e. W_LH
+*                    =5: Interference between W_T and W_L
+*                    =6: Interference between W_RH and W_LH
+*                    =7: All the above at once; intended for weighed events
+*                    See also KeyPRF (1009) below for reference frame choice
+ 1008            0d0 KeyFac =xpar(1008): Factorization scale choice
+*                    =0: muF**2 = Q**2 = s' (RECOMMENDED)
+*                    =1: muF**2 = MW**2
+ 1009            0d0 KeyPRF =xpar(1009): Polatization reference frame choice
+*                    =0: LAB frame
+*                    =1: W and 2nd beam nucleon CMS with +z axis along W 
+*                    =2: W rest frame with +z axis along W direction in LAB
+*                        and +x axis oriented according to beam with smaller 
+*                        polar angle in this frame
+******************************************************************************
+* Radiative corrections switches
+*<-i><----data-----><-------------------comments------------------------------>
+ 1011            4d0 KeyRad =xpar(1011): radiative correction switch
+*                    =0: Born level
+*                    =1: Above + QED radiative correction in W-decay    
+*                    =2: Above + O(alpha) EW corrections in W-decay
+*                    =3: QED correction for q + q~ -> W -> l + v 
+*                    =4: QED+EW correction for q + q~ -> W -> l + v 
+*                    =10: QED FSR generated by PHOTOS
+*                    =11: Strict O(alpha) ME correction (0 or 1 real photon)
+*                    =12: LL-type exponentiation + ME correction
+ 1012            0d0 KeyQCD =xpar(1012): QCD effects switch
+*                    =0: Off
+*                    =1: Initial-state QCD/QED parton shower done by PYTHIA    
+ 1013            0d0 KeyHad =xpar(1013): Hadronization switch
+*                    =0: Off
+*                    =1: Hadronization done by PYTHIA    
+ 1014            1d0 KeyQED =xpar(1014): scheme for QED-like corrections
+*                                        for KeyRad > 2 (details in the code).
+*                    =0: MS  (Marciano & Sirlin prescription);
+*                    =1: YFS (YFS-like prescription);    
+*                    =2: DSM (Dipole Subtraction method - RECOMMENDED).  
+******************************************************************************
+* Some technical switches
+*<-i><----data-----><-------------------comments------------------------------>
+ 1021        306000 KeyPDF =xpar(1021): choice of PDF parametrization
+*                    =0: parton-level process (no PDFs) 
+*                    =1:    some simple, unrealistic parametrization
+*                    >1000: PDFs from the library PDFLIB:
+*                           KeyPDF = 1000*NGROUP + NSET
+*                           See PDFLIB manuals for details. 
+*                    >10000: PDFs from the library LHAPDF,
+*                            See: http://hepforge.cedar.ac.uk/lhapdf/
+ 1022            0d0 KeyCol =xpar(1022): choice of collider type      
+*                    =0: proton-proton (e.g. LHC)       
+*                    =1: proton-antiproton (e.g. TEVATRON)
+*                    =2: heavy ion collisions
+ 1023            0d0 KeyWgt =xpar(1023): event-type choice
+*                    =0/1: unweighted/weighted events
+ 1024            1d0 KeyRnd =xpar(1024)
+*                    =1 for RANMAR random number generator (default)
+*                    =2 for ECURAN random number generator
+*                    =3 for CARRAN random number generator
+*                    =4 for external RNG, provided by the user through
+*                       SUBROUTINE EXTRAN in the file: winhac/dummies.f
+ 1031            1d0 KeyNuc =xpar(1031): choice of nuclear corrections
+*<-i><----data-----><-------------------comments------------------------------>
+ 1041            2d0 KeyPkm =xpar(1041): choice of kinematical matching
+*                                        between WINHAC and PYTHIA
+*                    =0: PYTHIA-like matching (wrong pTl distributions!)
+*                    =1: As above but no quarks rotiations in W-rest frame
+*                        (best agreement with fixed-order NLO for pTl).
+*                    =2: as for 0 but with swapped pT of PYTHIA quarks entering
+*                        hard process (best agreement with MC@NLO for pTl). 
+*<-i><----data-----><-------------------comments------------------------------>
+ 1051           11d0 IdGenr =xpar(1051): MC generator idetifier (ID)
+*                    It is used in weight monitoring and histogramming
+*                    in the program. 
+*<-i><----data-----><-------------------comments------------------------------>
+ 1061            1d0 LevPrn =xpar(1061): Print-out level            
+*                    =0: Minimum print-out              
+*                    =1: Standard print-out (RECOMMENDED)
+*                    =2: Verbose print-out, with diagnostics, controls, etc.
+*<-i><----data-----><-------------------comments------------------------------>
+ 2000############### NEvents =xpar(2000): Number of events to be generated            
+ 2001############### RanSeed =xpar(2001): Random seed for this run
+******************************************************************************
+EndX
+*//////////////////////////////////////////////////////////////////////////////
+
+
