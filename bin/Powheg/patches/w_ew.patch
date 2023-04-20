@@ -35,3 +35,36 @@ Index: gen_radiation.f
           if(notfinite_kin('Real')) goto 1
           call get_timer(seconds)
           call addtocnt("remnant time (sec)",seconds)
+
+Index: main-PHOTOS-lhef.f
+===================================================================
+--- main-PHOTOS-lhef.f  (revision 3621)
++++ main-PHOTOS-lhef.f  (working copy)
+@@ -117,7 +117,7 @@
+ c keep the values of variables mc_isr_scale and mc_fsr_scale, in order to write them in the output file
+ 
+ c Set infrared cutoff (using kt2minqed variable)
+-        xphcut = 2d0*sqrt( kt2minqed )/pup(5,3)
++        xphcut = 1d-7 ! MiNNLO-like
+ 
+ c        write(*,*) '*********** SI: event info: ', l, xphcut, scalup, mc_isr_scale, mc_fsr_scale, vetoscale_qed
+ 
+Index: photosCCF.cc
+===================================================================
+--- photosCCF.cc        (revision 3621)
++++ photosCCF.cc        (working copy)
+@@ -65,6 +65,15 @@
+     //Photos::setCorrectionWtForW(false);
+     //Photos::Photos::setInterference(false);
+ 
++    // MiNNLO-like Photos configuration
++    Photos::setExponentiation(true);
++    Photos::setMeCorrectionWtForW(true);
++    Photos::setMeCorrectionWtForZ(true);
++    Photos::setInfraredCutOff(1e-7);
++    Photos::setPairEmission(true);
++    Photos::setPhotonEmission(true);
++    Photos::createHistoryEntries(true, 746);
++
+     // Print again initialization info
+     Photos::iniInfo();
