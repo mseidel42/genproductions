@@ -13,6 +13,9 @@ lhans2  306000     ! pdf set for hadron 2 (LHA numbering)
 ! To be set only if using different pdf sets for the two incoming hadrons
 ! QCDLambda5  0.25 ! for not equal pdf sets 
 
+! ALPHAS AND PDF EVOLUTION
+alphas_from_pdf 1 ! (default 0) if 1, uses alphas from PDF evolution tool (e.g. lhapdf or hoppet)
+
 ! Parameters to allow or not the use of stored data
 use-old-grid    1 ! if 1 use old grid if file pwggrids.dat is present (<> 1 regenerate)
 use-old-ubound  1 ! if 1 use norm of upper bounding function stored in pwgubound.dat, if present; <> 1 regenerate
@@ -60,8 +63,8 @@ iseed SEED        ! initialize random number sequence
 #xgriditeration 1
 # End group for parallel run
 
-# set mass window around W-mass peak in unit of ph_Wwidth, NOT low/high cuts in GeV
-masswindow_low 40d0 ; 80 GeV / 2
+# set mass window around W-mass, patched to take low/high cuts in GeV
+masswindow_low 1d0
 masswindow_high 6500d0 ; 13000 TeV / 2
 
 # Input as for MiNNLO samples
@@ -78,7 +81,7 @@ gmu 1.1663787d-5
 use-s2effin 0.23154
 alphaem 7.7624494296896114d-3
 Tmass 172.5d0
-runningscale 0       ! default is 1, true, central scale equal to W virtuality, 0 equal to M_W
+runningscale 1       ! default is 1, true, central scale equal to W virtuality, 0 equal to M_W
 #
 CKM_Vud 0.97446
 CKM_Vus 0.22452

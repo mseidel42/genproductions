@@ -4,7 +4,7 @@ trap "exit" INT
 WHAT=$1;
 PARAM=$2;
 if [ "$#" -lt 1 ]; then
-    echo "minnloHelper.sh <OPTION>";
+    echo "minnloHelper_slc6.sh <OPTION>";
     exit 1;
 fi
 
@@ -15,6 +15,7 @@ CMSSW=CMSSW_10_2_29
 SUFFIX=powheg-MiNNLO31-svn${SVN}-ew-rwl6-j${NJOBS}-st2fix-ana-hoppetweights-ymax20-pdf2
 
 PROCS=(ZJToMuMu-5TeV-suggested-nnpdf31-ncalls-doublefsr-q139 WplusJToMuNu-5TeV-suggested-nnpdf31-ncalls-doublefsr-q139-ckm WminusJToMuNu-5TeV-suggested-nnpdf31-ncalls-doublefsr-q139-ckm)
+PROCS=(ZJToMuMu-8TeV-suggested-nnpdf31-ncalls-doublefsr-q139)
 
 case $WHAT in
 
@@ -43,7 +44,7 @@ case $WHAT in
         sed -i 's/ -fallow-argument-mismatch//g' patches/vj_minnlo_compiler_flags.patch
         for PROC in ${PROCS[@]}
         do
-            python ./run_pwg_condor.py -p 0 -i DY_MiNNLO_NNPDF31_13TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -d 1 --svn ${SVN}
+            cmssw-cc6 --command-to-run python ./run_pwg_condor.py -p 0 -i DY_MiNNLO_NNPDF31_13TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -d 1 --svn ${SVN}
         done
         sed -i 's/-fno-automatic/-fno-automatic -fallow-argument-mismatch/g' patches/vj_minnlo_compiler_flags.patch
     ;;
@@ -125,8 +126,8 @@ case $WHAT in
         do
             python ./run_pwg_condor.py -p 9 -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} 
         done
-        ./minnloHelper.sh PACK_REDUCED
-        ./minnloHelper.sh PACK_NORWL
+        ./minnloHelper_slc6.sh PACK_REDUCED
+        ./minnloHelper_slc6.sh PACK_NORWL
     ;;
     
     TEST )
