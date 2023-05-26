@@ -16,7 +16,7 @@ ARCH=slc6_amd64_gcc700
 CMSSW=CMSSW_10_2_29
 NJOBS=20
 SVN=3900
-SUFFIX=powheg-NLOEW-svn${SVN}-j${NJOBS}
+SUFFIX=powheg-NLOEW-svn${SVN}-j${NJOBS}-runscale
 
 PROCS=(ZToMuMu-8TeV-runtest)
 PROCS=(ZToMuMu-7TeV-minnlolike ZToMuMu-7TeV-minnlolike-noew ZToMuMu-7TeV-minnlolike-ewho)
@@ -36,6 +36,7 @@ case $WHAT in
 
     SLC6 )
         cmssw-cc6 --command-to-run ./$0 $PARAM
+        echo "For COMPILE: cmssw-cc6; eval \`scramv1 runtime -sh\`"
     ;;
     
     INIT )

@@ -53,7 +53,7 @@ Index: photosCCF.cc
 ===================================================================
 --- photosCCF.cc        (revision 3621)
 +++ photosCCF.cc        (working copy)
-@@ -65,6 +65,15 @@
+@@ -65,6 +65,14 @@
      //Photos::setCorrectionWtForW(false);
      //Photos::Photos::setInterference(false);
  
@@ -64,7 +64,34 @@ Index: photosCCF.cc
 +    Photos::setInfraredCutOff(1e-7);
 +    Photos::setPairEmission(true);
 +    Photos::setPhotonEmission(true);
-+    Photos::createHistoryEntries(true, 746);
 +
      // Print again initialization info
      Photos::iniInfo();
+
+Index: init_couplings.f
+===================================================================
+--- init_couplings.f    (revision 3621)
++++ init_couplings.f    (working copy)
+@@ -106,19 +106,19 @@
+ 
+ c     mass window
+       masswindow_low = powheginput("#masswindow_low")
+-      if (masswindow_low.le.0d0) masswindow_low=30d0
++      if (masswindow_low.le.0d0) masswindow_low=1d0
+       masswindow_high = powheginput("#masswindow_high")
+-      if (masswindow_high.le.0d0) masswindow_high=30d0
++      if (masswindow_high.le.0d0) masswindow_high=14000d0
+ 
+ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ cccccc   DEPENDENT QUANTITIES       
+ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ 
+-c     set mass window around W-mass peak in unit of ph_Wwidth
++c     set mass window around W-mass peak in GeV
+ c     It is used in the generation of the Born phase space
+-      ph_Wmass2low=max(decmass*1d0,ph_Wmass-masswindow_low*ph_Wwidth)
++      ph_Wmass2low=masswindow_low
+       ph_Wmass2low=ph_Wmass2low**2
+-      ph_Wmass2high=ph_Wmass+masswindow_high*ph_Wwidth
++      ph_Wmass2high=masswindow_high
+       ph_Wmass2high=min(kn_sbeams,ph_Wmass2high**2)
