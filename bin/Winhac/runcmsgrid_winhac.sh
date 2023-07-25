@@ -65,6 +65,9 @@ fi
 #make sure env variable for pdfsets points to the right place
 export LHAPDF_DATA_PATH=`$LHAPDFCONFIG --datadir`
 
+# extend lib path
+export LD_LIBRARY_PATH=${PWD}/winhac/photos/lib:$LD_LIBRARY_PATH
+
 # initialize the CMS environment 
 card=${WORKDIR}/demo.input
 
