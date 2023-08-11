@@ -15,12 +15,13 @@ def main():
     parser.add_option('-c', '--commands', dest="commands", default= 'checkout,compile,calc,pack', help='commands/stages to run')
     parser.add_option('-f', '--folderName', dest="dir", default='input', help='local folder name [input]')
     parser.add_option('-i', '--input', dest="input", default= 'input', help='input cfg file[input]')
+    parser.add_option('-t', '--tag', dest="tag", default= 'v5', help='version tag')
 
     # args = parser.parse_args ()
     (args, opts) = parser.parse_args(sys.argv)
 
     if args.dir == 'input':
-        args.dir = args.input.split('/')[-1]
+        args.dir = args.input.split('/')[-1]+'-'+args.tag
 
     print(args)
 
@@ -53,7 +54,9 @@ def checkout(args):
         # Unlock SSH key if running in background:
         # eval "$(ssh-agent -s)"
         # ssh-add ~/.ssh/id_rsa
-        git.Git(args.dir).clone('ssh://git@gitlab.cern.ch:7999/mseidel/horace.git')
+        g = git.Git(args.dir)
+        g.clone('ssh://git@gitlab.cern.ch:7999/mseidel/horace.git')
+        g.checkout(args.tag)
     except git.exc.GitCommandError as err:
         print(err)
 
