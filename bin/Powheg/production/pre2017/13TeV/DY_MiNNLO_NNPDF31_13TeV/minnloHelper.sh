@@ -165,7 +165,7 @@ case $WHAT in
         for PROC in ${PROCS[@]}
         do
             DIR=${PROC}-${SUFFIX}
-            rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
+            rm -rf ${DIR}; mkdir ${DIR}; cd ${DIR}
             tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
             cp ../../pwg-rwl-reduced.dat pwg-rwl.dat
             rm -rf lhapdf
@@ -226,7 +226,7 @@ case $WHAT in
         for PROC in ${PROCS[@]}
         do
             DIR=${PROC}-${SUFFIX}-norwl
-            rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
+            rm -rf ${DIR}; mkdir ${DIR}; cd ${DIR}
             tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
             sed -i '/rwl_file/d' powheg.input
             sed -i '/MINNLO="true"/d' runcmsgrid.sh
