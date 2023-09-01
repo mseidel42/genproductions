@@ -74,12 +74,13 @@ Hmass 125d0
 Mumass 0.1056583715d0
 Elmass 0.510998928d-3
 Taumass 1.77682d0
-scheme 4    !renorm. scheme; 0: alpha(0), 1: alpha(mz^2), 2: G_mu, 3: alpha(q^2), 4 (aka 3e): GF,mZ,s2effin
+scheme 2    !renorm. scheme; 0: alpha(0), 1: alpha(mz^2), 2: G_mu, 3: alpha(q^2), 4 (aka 3e): GF,mZ,s2effin
 gmu 1.1663787d-5
 use-s2effin 0.23154
 alphaem 7.7624494296896114d-3
 Tmass 172.5d0
 runningscale 1       ! default is 1, true, central scale equal to W virtuality, 0 equal to M_W
+ewscale 1
 #
 
 

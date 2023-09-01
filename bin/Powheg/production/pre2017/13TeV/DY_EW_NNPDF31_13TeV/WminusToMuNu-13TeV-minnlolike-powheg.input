@@ -82,6 +82,7 @@ use-s2effin 0.23154
 alphaem 0.007558209
 Tmass 172.5d0
 runningscale 1       ! default is 1, true, central scale equal to W virtuality, 0 equal to M_W
+ewscale 1
 #
 CKM_Vud 0.97446
 CKM_Vus 0.22452

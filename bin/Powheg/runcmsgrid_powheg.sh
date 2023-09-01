@@ -446,6 +446,30 @@ if [ "$process" = "Z_ew-BMNNPV" ] || [ "$process" = "W_ew-BMNNP" ]; then
   ../pwhg_main 2>&1 | tee logrew_${process}.txt; test $? -eq 0 || fail_exit "pwhg_main error: exit code not 0"
   mv pwgevents.lhe pwgevents_photos.lhe
   mv pwgevents-rwgt.lhe pwgevents.lhe
+
+  counter=1100
+  # EW scale variations
+  SCALES=(0.25 0.5 1 2 4)
+  for SCALE in ${SCALES[@]}
+  do
+      echo -e "\n doing EW scale ${SCALE}\n"
+      cp powheg.input.noweight powheg.input
+      sed -i '/rwl_file/d' powheg.input
+      echo "rwl_file '-'" >> powheg.input
+      echo "rwl_add 1" >> powheg.input
+      echo "<initrwgt>" >> powheg.input
+      echo "<weightgroup name='ewscale_variation'>" >> powheg.input
+      echo "<weight id='${counter}'> ewscale=${SCALE} </weight>" >> powheg.input
+      echo "</weightgroup>" >> powheg.input
+      echo "</initrwgt>" >> powheg.input
+      sed -i "s/ewscale .*/ewscale ${SCALE}/g" powheg.input
+      
+      ../pwhg_main 2>&1 | tee logrew_${process}_${seed}_ewscale_${SCALE}.txt; test $? -eq 0 || fail_exit "pwhg_main error: exit code not 0"
+      
+      mv pwgevents-rwgt.lhe pwgevents.lhe
+      
+      counter=$(( counter + 1 ))
+  done
 fi
 
 if [ "$produceWeights" == "true" ]; then

@@ -95,3 +95,18 @@ Index: init_couplings.f
 -      ph_Wmass2high=ph_Wmass+masswindow_high*ph_Wwidth
 +      ph_Wmass2high=masswindow_high
        ph_Wmass2high=min(kn_sbeams,ph_Wmass2high**2)
+
+Index: init_processes.f
+===================================================================
+--- init_processes.f    (revision 4031)
++++ init_processes.f    (working copy)
+@@ -53,7 +53,8 @@
+       endif
+ 
+ c EW renormalization scale
+-      em_muren2 = 1d0
++      em_muren2 = powheginput("#ewscale")
++      if(em_muren2.lt.0d0) em_muren2=1d0
+ c******************************************************
+ c     Choose the process to be implemented
+ c******************************************************

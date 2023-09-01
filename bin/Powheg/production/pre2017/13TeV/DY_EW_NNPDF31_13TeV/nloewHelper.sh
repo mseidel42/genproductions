@@ -16,7 +16,7 @@ ARCH=slc7_amd64_gcc10
 CMSSW=CMSSW_12_3_1
 NJOBS=20
 SVN=4018
-SUFFIX=powheg-NLOEW-svn${SVN}-j${NJOBS}-runscale
+SUFFIX=powheg-NLOEW-svn${SVN}-j${NJOBS}-runscale-ewscale
 
 PROCS=(ZToMuMu-8TeV-runtest)
 PROCS=(ZToMuMu-7TeV-minnlolike ZToMuMu-7TeV-minnlolike-noew ZToMuMu-7TeV-minnlolike-ewho)
