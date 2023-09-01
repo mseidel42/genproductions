@@ -12,10 +12,10 @@ declare -A procmap
 procmap[Z]="Z_ew-BMNNPV"
 procmap[W]="W_ew-BMNNP"
 
-ARCH=slc6_amd64_gcc700
-CMSSW=CMSSW_10_2_29
+ARCH=slc7_amd64_gcc10
+CMSSW=CMSSW_12_3_1
 NJOBS=20
-SVN=3900
+SVN=4018
 SUFFIX=powheg-NLOEW-svn${SVN}-j${NJOBS}-runscale
 
 PROCS=(ZToMuMu-8TeV-runtest)
@@ -40,10 +40,10 @@ case $WHAT in
     ;;
     
     INIT )
-        ln -s genproductions/bin/Powheg/*.py .
-        ln -s genproductions/bin/Powheg/*.sh .
-        ln -s genproductions/bin/Powheg/patches .
-        ln -s genproductions/bin/Powheg/production/pre2017/13TeV/DY_EW_NNPDF31_13TeV .
+        ln -s ../../genproductions/bin/Powheg/*.py .
+        ln -s ../../genproductions/bin/Powheg/*.sh .
+        ln -s ../../genproductions/bin/Powheg/patches .
+        ln -s ../../genproductions/bin/Powheg/production/pre2017/13TeV/DY_EW_NNPDF31_13TeV .
     ;;
     
     PRINT )
