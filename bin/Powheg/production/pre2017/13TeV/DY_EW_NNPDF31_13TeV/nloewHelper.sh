@@ -86,7 +86,7 @@ case $WHAT in
             python ./run_pwg_condor.py -p 9 -m ${MPROC} -f ${PROC}-${SUFFIX} 
         done
         ./nloewHelper.sh PACK_REDUCED
-        # ./nloewHelper.sh PACK_NORWL
+        ./nloewHelper.sh PACK_NORWL
     ;;
     
     TEST )
@@ -164,6 +164,14 @@ case $WHAT in
             MPROC=${procmap[${PROC:0:1}]}
             echo ${PROC}-${SUFFIX}
             ls ${PROC}-${SUFFIX}
+        done
+    ;;
+
+    COPYTEST )
+        for PROC in ${PROCS[@]}
+        do
+            echo ${PROC}-${SUFFIX}
+            cp -r ${PROC}-${SUFFIX} ${PROC}-${SUFFIX}-test
         done
     ;;
 

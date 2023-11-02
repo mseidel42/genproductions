@@ -120,3 +120,5 @@ CKM_Vtb 0.999105
                     ! Notice: you can specify either new_damp or theta_damp or nothing (to use
                     ! the Powheg default for damping Born zeros), but no more than one of the two.
 
+pdfreweight 1
+storeinfo_rwgt 1

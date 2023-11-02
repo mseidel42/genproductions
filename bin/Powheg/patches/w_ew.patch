@@ -70,7 +70,7 @@ Index: photosCCF.cc
 
 Index: init_couplings.f
 ===================================================================
---- init_couplings.f    (revision 3621)
+--- init_couplings.f    (revision 4031)
 +++ init_couplings.f    (working copy)
 @@ -106,19 +106,19 @@
  
@@ -95,6 +95,8 @@ Index: init_couplings.f
 -      ph_Wmass2high=ph_Wmass+masswindow_high*ph_Wwidth
 +      ph_Wmass2high=masswindow_high
        ph_Wmass2high=min(kn_sbeams,ph_Wmass2high**2)
+ 
+ *
 
 Index: init_processes.f
 ===================================================================

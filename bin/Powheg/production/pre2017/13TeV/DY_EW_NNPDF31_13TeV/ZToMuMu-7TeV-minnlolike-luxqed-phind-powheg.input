@@ -110,4 +110,5 @@ btlscalect 1
                     ! You can experiment with other values. Remember: too small  hnew_damp and/or hdamp factors can cause troubles,
                     ! check that you get a nice sudakov shape of the vector boson pt.
 
-
+pdfreweight 1
+storeinfo_rwgt 1
