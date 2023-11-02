@@ -427,7 +427,9 @@ echo \"Leaving patch6 for ${process} in directory $(pwd)\"\n \
     "Z_ew-BMNNPV" : "patch -l -p0 -i ${patches_dir}/z_ew.patch\n \
 ## put the correct library names for PHOTOS++ into the Makefile\n \
 echo 'Linking PHOTOS++ libraries in the Makefile'\n \
-sed -i 's+^PHOTOSCC_LOCATION=.*+PHOTOSCC_LOCATION=/cvmfs/cms.cern.ch/slc6_amd64_gcc700/external/photospp/3.61-omkpbe2+g' Makefile\n \
+PHOTOSPP_BASE=`scram tool info photospp | grep PHOTOSPP_BASE | cut -d \"=\" -f2`\n \
+echo \"PHOTOSPP_BASE: ${PHOTOSPP_BASE}\"\n \
+sed -i \"s+^PHOTOSCC_LOCATION=.*+PHOTOSCC_LOCATION=${PHOTOSPP_BASE}+g\" Makefile\n \
 sed -i '/lPhotosFortran/s/^/#/g' Makefile\n \
 sed -i '/lPhotospp/s/^# //g' Makefile\n \
 ## make the main-PHOTOS-lhef\n \
@@ -436,7 +438,9 @@ make main-PHOTOS-lhef",
     "W_ew-BMNNP" : "patch -l -p0 -i ${patches_dir}/w_ew.patch\n \
 ## put the correct library names for PHOTOS++ into the Makefile\n \
 echo 'Linking PHOTOS++ libraries in the Makefile'\n \
-sed -i 's+^PHOTOSCC_LOCATION=.*+PHOTOSCC_LOCATION=/cvmfs/cms.cern.ch/slc6_amd64_gcc700/external/photospp/3.61-omkpbe2+g' Makefile\n \
+PHOTOSPP_BASE=`scram tool info photospp | grep PHOTOSPP_BASE | cut -d \"=\" -f2`\n \
+echo \"PHOTOSPP_BASE: ${PHOTOSPP_BASE}\"\n \
+sed -i \"s+^PHOTOSCC_LOCATION=.*+PHOTOSCC_LOCATION=${PHOTOSPP_BASE}+g\" Makefile\n \
 sed -i '/lPhotosFortran/s/^/#/g' Makefile\n \
 sed -i '/lPhotospp/s/^# //g' Makefile\n \
 ## make the main-PHOTOS-lhef\n \
