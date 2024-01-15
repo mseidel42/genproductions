@@ -31,6 +31,7 @@ PROCS=(ZToMuMu-7TeV-minnlolike-qedonly ZToMuMu-7TeV-minnlolike-weakonly)
 PROCS=(ZToMuMu-7TeV-minnlolike ZToMuMu-7TeV-minnlolike-noew)
 PROCS=(WplusToMuNu-13TeV-minnlolike WplusToMuNu-13TeV-minnlolike-noew WminusToMuNu-13TeV-minnlolike WminusToMuNu-13TeV-minnlolike-noew)
 PROCS=(ZToMuMu-7TeV-minnlolike ZToMuMu-7TeV-minnlolike-noew ZToMuMu-13TeV-minnlolike ZToMuMu-13TeV-minnlolike-noew WplusToMuNu-13TeV-minnlolike WplusToMuNu-13TeV-minnlolike-noew WminusToMuNu-13TeV-minnlolike WminusToMuNu-13TeV-minnlolike-noew)
+PROCS=(ZToMuMu-13TeV-minnlolike ZToMuMu-13TeV-minnlolike-noew)
 
 case $WHAT in
 
