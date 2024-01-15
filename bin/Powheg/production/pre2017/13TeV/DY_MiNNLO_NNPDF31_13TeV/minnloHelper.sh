@@ -231,6 +231,7 @@ case $WHAT in
             sed -i '/rwl_file/d' powheg.input
             sed -i '/MINNLO="true"/d' runcmsgrid.sh
             rm -rf lhapdf
+            rm pwg-rwl.dat
             tar zcf ../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz *
             cd ..
         done
