@@ -1,4 +1,4 @@
-# Line by line instructions for the POWHEG tutorial
+B# Line by line instructions for the POWHEG tutorial
 
 BEFORE LISTENING TO PRESENTATIONS
 
@@ -26,14 +26,20 @@ Run the "manyseeds" job (generates Higgs in gluon fusion, at the NLO QCD and wit
 taken into account)
 
 ```
-nohup python ./run_pwg_parallel_condor.py -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -x 3 -f my_tutorial_ggHfull -q 1:espresso,2:longlunch,3:longlunch -j 10 > check_manyseeds.log &
+python ./run_pwg_parallel_condor.py -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -x 3 -f my_tutorial_ggHfull -q 1:espresso,2:longlunch,3:longlunch -j 10 
 ``` 
 
-"nohup" would allow you to close the shell window where the job is running. But in this case do not close it while listening to the presentations, in order to check later what is happening.
+DAG job handling would allow you to close the shell window now. But in this case do not close it while listening to the presentations, in order to check later what is happening.
 
 AFTER LISTENING TO THE PRESENTATIONS
 
-Run a simple POWHEG job (generates ttbar production at the NLO QCD)
+Check if the morning job has finished (see slides), if so, create the POWHEG-pack:
+
+```
+python ./run_pwg_condor.py -p 9 -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -f my_tutorial_ggHfull 
+``` 
+
+Now run a second, simpler POWHEG job (generates ttbar production at the NLO QCD)
 
 ```
 python ./run_pwg_condor.py -i tutorial_ttbar_powheg.input -m hvq -p f -f my_tutorial_ttbar 

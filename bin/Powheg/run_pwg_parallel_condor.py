@@ -33,7 +33,7 @@ if __name__ == "__main__":
     eoscmd = '/afs/cern.ch/project/eos/installation/cms/bin/eos.select' ;
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--parstage'      , dest="parstage",      default= '01239',        help='stage of the production process [01239]')
+    parser.add_argument('-p', '--parstage'      , dest="parstage",      default= '0123',        help='stage of the production process [0123]')
     parser.add_argument('-f', '--folderName'    , dest="folderName",    default='testProd',      help='local folder and last eos folder name[testProd]')
     parser.add_argument('-e', '--eosFolder'     , dest="eosFolder",     default='NONE' ,         help='folder before the last one, on EOS')
     parser.add_argument('-j', '--numJobs'       , dest="numJobs",       default= '10',           help='number of jobs to be used for multicore grid step 1,2,3')
