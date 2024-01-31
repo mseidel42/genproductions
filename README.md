@@ -26,7 +26,7 @@ Run the "manyseeds" job (generates Higgs in gluon fusion, at the NLO QCD and wit
 taken into account)
 
 ```
-nohup python ./run_pwg_parallel_condor.py -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -x 3 -f my_tutorial_ggHfull -q espresso -q2 longlunch -j 10 > check_manyseeds.log &
+nohup python ./run_pwg_parallel_condor.py -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -x 3 -f my_tutorial_ggHfull -q 1:espresso,2:longlunch,3:longlunch -j 10 > check_manyseeds.log &
 ``` 
 
 "nohup" would allow you to close the shell window where the job is running. But in this case do not close it while listening to the presentations, in order to check later what is happening.
