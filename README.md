@@ -8,8 +8,7 @@ submitted to official production. NOTICE THE DIFFERENCE WITH MADGRAPH CMS SETUP,
 only later, when defining a specific event generation.
 
 ```
-ssh lxplus7.cern.ch
-setenv SCRAM_ARCH slc7_amd64_gcc12  (in bash: export SCRAM_ARCH=slc7_amd64_gcc12)
+ssh lxplus8.cern.ch
 scram p -n pwgtutorial_13_3_0 CMSSW_13_3_0
 cd pwgtutorial_13_3_0/src
 eval `scram runtime -csh`  (in bash: -sh)
@@ -18,15 +17,18 @@ eval `scram runtime -csh`  (in bash: -sh)
 Download the "genproductions" package, which is a generic container for CMS MC-generator scripts and configuration cards. 
 
 ```
-git clone --single-branch --depth=1 -b tutorial-24-02-19 git@github.com:covarell/genproductions.git
-cd genproductions/bin/Powheg
+git clone --single-branch --depth=1 --no-checkout -b tutorial-24-02-19 git@github.com:covarell/genproductions.git
+cd genproductions
+git sparse-checkout set .github bin/Powheg
+git checkout
+cd bin/Powheg
 ```
 
 Run the "manyseeds" job (generates Higgs in gluon fusion, at the NLO QCD and with heavy-quark masses properly
 taken into account)
 
 ```
-python ./run_pwg_parallel_condor.py -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -x 3 -f my_tutorial_ggHfull -q 1:espresso,2:longlunch,3:longlunch -j 10 
+python3 ./run_pwg_parallel_condor.py -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -x 3 -f my_tutorial_ggHfull -q 1:espresso,2:longlunch,3:longlunch -j 10 
 ``` 
 
 DAG job handling would allow you to close the shell window now. But in this case do not close it while listening to the presentations, in order to check later what is happening.
@@ -36,13 +38,13 @@ AFTER LISTENING TO THE PRESENTATIONS
 Check if the morning job has finished (see slides), if so, create the POWHEG-pack:
 
 ```
-python ./run_pwg_condor.py -p 9 -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -f my_tutorial_ggHfull 
+python3 ./run_pwg_condor.py -p 9 -i tutorial_ggH_powheg.input -m gg_H_quark-mass-effects -f my_tutorial_ggHfull 
 ``` 
 
 Now run a second, simpler POWHEG job (generates ttbar production at the NLO QCD)
 
 ```
-python ./run_pwg_condor.py -i tutorial_ttbar_powheg.input -m hvq -p f -f my_tutorial_ttbar 
+python3 ./run_pwg_condor.py -i tutorial_ttbar_powheg.input -m hvq -p f -f my_tutorial_ttbar 
 ```
 
 Generate 3000 ttbar LH events.
