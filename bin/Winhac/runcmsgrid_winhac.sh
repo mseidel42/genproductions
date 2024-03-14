@@ -93,8 +93,6 @@ echo "<LesHouchesEvents version=\"3.0\">" >> cmsgrid_final.lhe
 echo "<!--" >> cmsgrid_final.lhe
 cat demo.input | sed "/^\*.*/d" >> cmsgrid_final.lhe
 echo "-->" >> cmsgrid_final.lhe
-echo "<header>" >> cmsgrid_final.lhe
-echo "</header>" >> cmsgrid_final.lhe
 cat demo.lhe.init >> cmsgrid_final.lhe
 cat demo.lhe >> cmsgrid_final.lhe
 echo "</LesHouchesEvents>" >> cmsgrid_final.lhe
