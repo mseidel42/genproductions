@@ -19,8 +19,15 @@ if [ "$PROC" = "" ]; then
 fi
 
 # define test input for each process
+EXTRAOPTS=""
 case $PROC in
-    hvq) INPUT=production/2017/13TeV/TT_hvq/TT_hdamp_NNPDF31_NNLO_inclusive.input;;
+    hvq)
+        INPUT=production/2017/13TeV/TT_hvq/TT_hdamp_NNPDF31_NNLO_inclusive.input
+        ;;
+    Zj)
+        INPUT=production/pre2017/13TeV/DY_MiNNLO_NNPDF31_13TeV/ZJToMuMu-suggested-nnpdf31-ncalls-doublefsr-q139-ci.input
+        EXTRAOPTS="--svn 3900 --numEvents 20"
+        ;;
     *) echo "Error: process $PROC not defined in test script"; exit 1;;
 esac
 
@@ -48,7 +55,7 @@ cd $CMSSW_RELEASE/src
 eval `/cvmfs/cms.cern.ch/common/scramv1 runtime -sh`
 ln -s $POWHEG_DIR/* .
 # run Powheg
-python3 run_pwg_condor.py -p f -i $INPUT -m $PROC -d 1
+python3 run_pwg_condor.py -p f -i $INPUT -m $PROC -d 1 ${EXTRAOPTS}
 cp testProd/pwg-stat.dat test/pwg-stat.dat.${PROC}_${SCRAM_ARCH}_${CMSSW_RELEASE}
 
 GRIDPACK=${PROC}_${SCRAM_ARCH}_${CMSSW_RELEASE}_testProd.tgz
