@@ -1,0 +1,117 @@
+######################
+# Process selection  #
+######################
+idvecbos          24   ! 24: W+ boson,     -24: W- boson
+vdecaymode        2     ! 1: e-nu, 2: mu-nu, 3: tau-nu
+
+ih1   1           ! hadron 1 (1 for protons, -1 for antiprotons)
+ih2   1           ! hadron 2 (1 for protons, -1 for antiprotons)
+ebeam1 6500d0     ! energy of beam 1
+ebeam2 6500d0     ! energy of beam 2
+
+#bornonly   1      ! (default 0) if 1 do Born only
+#LOevents   1      ! (default 0) if 1 do LO events only (it must be accompained by bornonly)
+
+#################################
+# Technical cuts and born suppr #
+#################################
+wmasslow  1d0              !mandatory param
+wmasshigh 13000d0          !mandatory param
+bornktmin 0d0              !default 0
+bornsuppfact -10d0          !enhance sampling in the high pT region
+
+###################
+# Scales and PDFs #
+###################
+! To be set only if using LHA pdfs
+lhans1  306000    ! pdf set for hadron 1 (LHA numbering)
+lhans2  306000    ! pdf set for hadron 2 (LHA numbering)
+
+runningscales 1   ! (defalt 1): if 1, use mu=HT/2, otherwise mu=mW
+#btlscalereal 1    ! (default 0, false): if 1, use real kinematics to evaluate muf and mur in the real term and subtraction terms
+#btlscalect   1    ! (default 0, false): if 1 and btlscalereal 1 , use underlying-Born  kinematics to evaluate muf and mur in the subtraction terms
+
+renscfact  1d0    ! (default 1d0) ren scale factor: muren  = muref * renscfact 
+facscfact  1d0    ! (default 1d0) fac scale factor: mufact = muref * facscfact
+
+alphas_from_pdf 1 ! (default 0): if 1, use the pdf running for alphas
+
+ptsqmin 1d0       ! Increase ptsqmin for radiation generation to be larger than max(ptsqmin_pythia, ptsqmin_herwig)
+
+############################
+# POWHEG tuning parameters #
+############################
+bornzerodamp 1     ! (default 0): if 1, consider remnant real contributions 5 times bigger than the soft approx
+hdamp 1d-1         ! running hdamp to provide additional separation between singular and non-singular
+resum_profile 1    ! (default 1): if on, and hdamp >=0, it uses a resummation-inspired profile function, otherwise a power-suppression
+
+
+
+################################
+# Relevant physical quantities #
+################################
+
+CKM_Vud 0.97446
+CKM_Vus 0.22452
+CKM_Vub 0.00365
+CKM_Vcd 0.22438
+CKM_Vcs 0.97359
+CKM_Vcb 0.04214
+CKM_Vtd 0.00896
+CKM_Vts 0.04133
+CKM_Vtb 0.999105
+
+gfermi 1.1663787d-5
+# wmass 80.385
+# zmass 91.1876
+# wwidth 2.085
+# switch to s-dependent width scheme
+wmass 80.3518
+zmass 91.1535
+wwidth 2.0904
+tmass 172.5
+bmass 4.8
+cmass 1.5
+
+##############
+# Statistics #
+##############
+numevts 10000    ! number of events to be generated
+
+ncall1   200000    ! number of calls for initializing the integration grid
+itmx1    1        ! number of iterations for initializing the integration grid
+ncall2   200000   ! number of calls for computing the integral and finding upper bound
+itmx2    1        ! number of iterations for computing the integral and finding upper bound
+foldcsi   1       ! number of folds on csi integration
+foldy     1       ! number of folds on  y  integration
+foldphi   1       ! number of folds on phi integration
+nubound 200000     ! number of bbarra calls to setup norm of upper bounding function
+
+########################
+# Technical parameters #
+########################
+! Parameters to allow or not the use of stored data
+use-old-grid    1 ! if 1 use old grid if file pwggrids.dat is present (<> 1 regenerate)
+use-old-ubound  1 ! if 1 use norm of upper bounding function stored in pwgubound.dat, if present; <> 1 regenerate
+
+fastbtlbound 0
+storemintupb 0
+ubexcess_correct 1
+
+withnegweights 1   ! (default 0) if on (1) use negative weights
+
+softtest 0         ! (default 1) if on (1) check the soft subtraction terms
+colltest 0         ! (default 1) if on (1) check the collinear subtraction terms
+
+#iseed    12345    ! initialize random number sequence 
+#rand1     -1      ! initialize random number sequence 
+#rand2     -1      ! initialize random number sequence 
+
+
+########################
+# Reweighting (stage4) #
+########################
+storeinfo_rwgt 1   ! store info to allow for reweighting
+
+# REWEIGHTING STUFF
+# handled by CMS scripts
