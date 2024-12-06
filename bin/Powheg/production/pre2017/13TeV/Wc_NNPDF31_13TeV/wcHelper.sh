@@ -66,6 +66,10 @@ case $WHAT in
         eval `scramv1 runtime -sh`
         for PROC in ${PROCS[@]}
         do
+            cd ${PROC}-${SUFFIX}
+            python3 ../production/pre2017/13TeV/Wc_NNPDF31_13TeV/make_rwl.py 1 306000 1
+            git clone https://gitlab.cern.ch/cms-wmass/lhapdf.git
+            cd -
             python3 ./run_pwg_condor.py -p 9 -m ${MPROC} -f ${PROC}-${SUFFIX} 
         done
         ./wcHelper.sh PACK_REDUCED
