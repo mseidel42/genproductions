@@ -10,9 +10,9 @@ fi
 
 NJOBS=200
 SVN=3900
-ARCH=slc7_amd64_gcc10
+SCRAM_ARCH=slc7_amd64_gcc10
 CMSSW=CMSSW_12_3_1
-SUFFIX=powheg-MiNNLO31-svn${SVN}-ew-rwl6-j${NJOBS}-st2fix-ana-hoppetweights-ymax20-pdf2
+SUFFIX=powheg-MiNNLO31-svn${SVN}-ew-rwl6-j${NJOBS}-st2fix-ana-hoppetweights-ymax20-pdf3
 
 PROCS=(ZJToMuMu-13p6TeV-suggested-nnpdf31-ncalls-doublefsr-q139 WplusJToMuNu-13p6TeV-suggested-nnpdf31-ncalls-doublefsr-q139-ckm WminusJToMuNu-13p6TeV-suggested-nnpdf31-ncalls-doublefsr-q139-ckm)
 
@@ -125,10 +125,11 @@ case $WHAT in
         eval `scramv1 runtime -sh`
         for PROC in ${PROCS[@]}
         do
-            python ./run_pwg_condor.py -p 9 -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} 
+            cd ${PROC}-${SUFFIX}
+            git clone https://gitlab.cern.ch/cms-wmass/lhapdf.git
+            cd -
+            python3 ./run_pwg_condor.py -p 9 -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} 
         done
-        ./minnloHelper_Run3.sh PACK_REDUCED
-        ./minnloHelper_Run3.sh PACK_NORWL
     ;;
     
     TEST )
@@ -138,7 +139,7 @@ case $WHAT in
         do
             DIR=${PROC}-${SUFFIX}
             rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-            tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
+            tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
             /usr/bin/time -v ./runcmsgrid.sh 20 1 1 &
             cd ..
         done
@@ -151,7 +152,7 @@ case $WHAT in
         do
             DIR=${PROC}-${SUFFIX}
             rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-            tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
+            tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
             /usr/bin/time -v ./runcmsgrid.sh 800 1 1 &
             cd ..
         done
@@ -163,9 +164,9 @@ case $WHAT in
         do
             DIR=${PROC}-${SUFFIX}
             rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-            tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
+            tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
             cp ../../pwg-rwl-reduced.dat pwg-rwl.dat
-            tar zcf ../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz *
+            tar zcf ../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz *
             cd ..
         done
     ;;
@@ -177,7 +178,7 @@ case $WHAT in
         do
             DIR=${PROC}-${SUFFIX}
             rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-            tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz
+            tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz
             ./runcmsgrid.sh 10 1 1 &
             cd ..
         done
@@ -192,14 +193,14 @@ case $WHAT in
                 NEWPROC=${PROC//Mu/$LEP}
                 DIR=${NEWPROC}-${SUFFIX}
                 rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-                tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
+                tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
                 if [ "$LEP" == "E" ]; then
                     LEPID=1
                 elif [ "$LEP" == "Tau" ]; then
                     LEPID=3
                 fi
                 sed -i "s/vdecaymode .*/vdecaymode ${LEPID}/g" powheg.input
-                tar zcf ../${PROC:0:1}j_${ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}.tgz *
+                tar zcf ../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}.tgz *
                 cd ..
             done
         done
@@ -212,7 +213,7 @@ case $WHAT in
             for LEP in E Tau
             do
                 NEWPROC=${PROC//Mu/$LEP}
-                cp -p -v ${PROC:0:1}j_${ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
+                cp -p -v ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
             done
         done
     ;;
@@ -223,10 +224,10 @@ case $WHAT in
         do
             DIR=${PROC}-${SUFFIX}-norwl
             rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-            tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
+            tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
             sed -i '/rwl_file/d' powheg.input
             sed -i '/MINNLO="true"/d' runcmsgrid.sh
-            tar zcf ../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz *
+            tar zcf ../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz *
             cd ..
         done
     ;;
@@ -238,7 +239,7 @@ case $WHAT in
         do
             DIR=${PROC}-${SUFFIX}-norwl
             rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-            tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz
+            tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz
             ./runcmsgrid.sh 5 1 1 &
             cd ..
         done
@@ -247,12 +248,12 @@ case $WHAT in
     COPY )
         for PROC in ${PROCS[@]}
         do
-            echo ${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
-            echo ${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz
-            echo ${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz
-            cp -p -v ${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
-            cp -p -v PACK_REDUCED/${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
-            cp -p -v PACK_REDUCED/${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
+            echo ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
+            echo ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz
+            echo ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz
+            cp -p -v ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
+            cp -p -v PACK_REDUCED/${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
+            cp -p -v PACK_REDUCED/${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
         done
     ;;
     
@@ -266,65 +267,15 @@ case $WHAT in
         done
     ;;
     
-    MAKE_MASSRWGT )
-        mkdir PACK_MASSRWGT; cd PACK_MASSRWGT
+    PDF2_PDF3 )
         for PROC in ${PROCS[@]}
         do
-            DIR=${PROC}-${SUFFIX}
-            rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-            tar -xzf ../../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
-            PROCSPLIT=(`echo ${PROC} | tr "-" "\n"`)
-            cp ../../DY_MiNNLO_NNPDF31_13p6TeV/lheWriter_cfg.py .
-            sed -i "s/ZJToMuMu/${PROCSPLIT[0]}/g" lheWriter_cfg.py
-            diff ../../DY_MiNNLO_NNPDF31_13p6TeV/lheWriter_cfg.py lheWriter_cfg.py
-            cp ../../DY_MiNNLO_NNPDF31_13p6TeV/runcmsgrid_addMassWeights.sh runcmsgrid.sh
-            sed -i "s/process=.*/process=\"${PROC:0:1}j\"/g" runcmsgrid.sh
-            sed -i s/SCRAM_ARCH_VERSION_REPLACE/${ARCH}/g runcmsgrid.sh
-            sed -i s/CMSSW_VERSION_REPLACE/${CMSSW}/g runcmsgrid.sh
-            diff ../../DY_MiNNLO_NNPDF31_13p6TeV/runcmsgrid_addMassWeights.sh runcmsgrid.sh
-            tar zcf ../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-addmassweights.tgz *
-            cd ..
+            rm -r ${PROC}-${SUFFIX}; mkdir ${PROC}-${SUFFIX}; cd ${PROC}-${SUFFIX}
+            tar -xzf ../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX//-pdf3/-pdf2}.tgz
+            cp ../pwg-rwl.dat .
+            cd -
         done
+        echo "Now run PACK"
     ;;
-    
-    MAKE_MASSRWGT_LEP )
-        mkdir PACK_MASSRWGT; cd PACK_MASSRWGT
-        for PROC in ${PROCS[@]}
-        do
-            for LEP in E Tau
-            do
-                NEWPROC=${PROC//Mu/$LEP}
-                DIR=${NEWPROC}-${SUFFIX}
-                rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
-                tar -xzf ../${PROC:0:1}j_${ARCH}_${CMSSW}_${PROC}-${SUFFIX}-addmassweights.tgz
-                if [ "$LEP" == "E" ]; then
-                    LEPID=1
-                elif [ "$LEP" == "Tau" ]; then
-                    LEPID=3
-                fi
-                sed -i "s/vdecaymode .*/vdecaymode ${LEPID}/g" powheg.input
-                PROCSPLIT=(`echo ${PROC} | tr "-" "\n"`)
-                NEWPROCSPLIT=(`echo ${NEWPROC} | tr "-" "\n"`)
-                sed -i "s/${PROCSPLIT[0]}/${NEWPROCSPLIT[0]}/g" lheWriter_cfg.py
-                diff ../../DY_MiNNLO_NNPDF31_13p6TeV/lheWriter_cfg.py lheWriter_cfg.py
-                diff ../../DY_MiNNLO_NNPDF31_13p6TeV/runcmsgrid.sh runcmsgrid.sh
-                tar zcf ../${PROC:0:1}j_${ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}-addmassweights.tgz *
-                cd ..
-            done
-        done
-    ;;
-    
-    COPY_MASSRWGT )
-        cd PACK_MASSRWGT
-        for PROC in ${PROCS[@]}
-        do
-            for LEP in E Mu Tau
-            do
-                NEWPROC=${PROC//Mu/$LEP}
-                cp -p -v ${PROC:0:1}j_${ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}-addmassweights.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
-            done
-        done
-    ;;
-    
 
 esac
