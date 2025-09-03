@@ -192,7 +192,7 @@ case $WHAT in
             do
                 NEWPROC=${PROC//Mu/$LEP}
                 DIR=${NEWPROC}-${SUFFIX}
-                rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
+                rm -rf ${DIR}; mkdir ${DIR}; cd ${DIR}
                 tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
                 if [ "$LEP" == "E" ]; then
                     LEPID=1
@@ -202,18 +202,19 @@ case $WHAT in
                 sed -i "s/vdecaymode .*/vdecaymode ${LEPID}/g" powheg.input
                 tar zcf ../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}.tgz *
                 cd ..
+                rm -rf ${DIR};
             done
         done
     ;;
     
-    COPY_LEP )
+    MOVE_LEP )
         cd PACK_LEP
         for PROC in ${PROCS[@]}
         do
             for LEP in E Tau
             do
                 NEWPROC=${PROC//Mu/$LEP}
-                cp -p -v ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
+                mv -v ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${NEWPROC}-${SUFFIX}.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
             done
         done
     ;;
