@@ -10,20 +10,16 @@ fi
 
 NJOBS=200
 SVN=3900
-SCRAM_ARCH=slc7_amd64_gcc10
-CMSSW=CMSSW_12_3_1
+SCRAM_ARCH=el8_amd64_gcc12
+CMSSW=CMSSW_14_2_0
 SUFFIX=powheg-MiNNLO31-svn${SVN}-ew-rwl6-j${NJOBS}-st2fix-ana-hoppetweights-ymax20-pdf3
 
 PROCS=(ZJToMuMu-13p6TeV-suggested-nnpdf31-ncalls-doublefsr-q139 WplusJToMuNu-13p6TeV-suggested-nnpdf31-ncalls-doublefsr-q139-ckm WminusJToMuNu-13p6TeV-suggested-nnpdf31-ncalls-doublefsr-q139-ckm)
 
 case $WHAT in
 
-    SLC6 )
-        cmssw-cc6 --command-to-run ./$0 $PARAM
-    ;;
-    
-    SLC7 )
-        cmssw-cc7 --command-to-run ./$0 $PARAM
+    EL8 )
+        cmssw-el8 --command-to-run ./$0 $PARAM
     ;;
     
     INIT )
@@ -46,7 +42,7 @@ case $WHAT in
         eval `scramv1 runtime -sh`
         for PROC in ${PROCS[@]}
         do
-            python ./run_pwg_condor.py -p 0 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -d 1 --svn ${SVN}
+            python3 ./run_pwg_condor.py -p 0 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -d 1 --svn ${SVN}
         done
     ;;
     
@@ -65,14 +61,14 @@ case $WHAT in
     ONESHOT )
         for PROC in ${PROCS[@]}
         do
-            python ./run_pwg_condor.py -p f -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -d 1 --svn ${SVN}
+            python3 ./run_pwg_condor.py -p f -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -d 1 --svn ${SVN}
         done
     ;;
 
     GRIDS )
         for PROC in ${PROCS[@]}
         do
-            k5reauth -R -- python ./run_pwg_parallel_condor.py -p 123 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q 1:longlunch,2:workday,3:longlunch --step3pilot -x 3 -j ${NJOBS}
+            k5reauth -R -- python3 ./run_pwg_parallel_condor.py -p 123 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q 1:longlunch,2:workday,3:longlunch --step3pilot -x 3 -j ${NJOBS}
         done
     ;;
     
@@ -88,28 +84,28 @@ case $WHAT in
     LONGGRIDS )
         for PROC in ${PROCS[@]}
         do
-            k5reauth -R -- python ./run_pwg_parallel_condor.py -p 123 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q 1:workday,2:tomorrow,3:longlunch --step3pilot -x 3 -j ${NJOBS}
+            k5reauth -R -- python3 ./run_pwg_parallel_condor.py -p 123 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q 1:workday,2:tomorrow,3:longlunch --step3pilot -x 3 -j ${NJOBS}
         done
     ;;
     
     GRIDS1 )
         for PROC in ${PROCS[@]}
         do
-            k5reauth -R -- python ./run_pwg_parallel_condor.py -p 1 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q workday -j ${NJOBS}
+            k5reauth -R -- python3 ./run_pwg_parallel_condor.py -p 1 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q workday -j ${NJOBS}
         done
     ;;
     
     GRIDS2 )
         for PROC in ${PROCS[@]}
         do
-            k5reauth -R -- python ./run_pwg_parallel_condor.py -p 2 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q workday -j ${NJOBS}
+            k5reauth -R -- python3 ./run_pwg_parallel_condor.py -p 2 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q workday -j ${NJOBS}
         done
     ;;
     
     GRIDS3 )
         for PROC in ${PROCS[@]}
         do
-            k5reauth -R -- python ./run_pwg_parallel_condor.py -p 3 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q longlunch -j ${NJOBS} --step3pilot &
+            k5reauth -R -- python3 ./run_pwg_parallel_condor.py -p 3 -i DY_MiNNLO_NNPDF31_13p6TeV/${PROC}-powheg.input -m ${PROC:0:1}j -f ${PROC}-${SUFFIX} -q longlunch -j ${NJOBS} --step3pilot &
         done
     ;;
     
@@ -138,10 +134,20 @@ case $WHAT in
         for PROC in ${PROCS[@]}
         do
             DIR=${PROC}-${SUFFIX}
-            rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
+            rm -rf ${DIR}; mkdir ${DIR}; cd ${DIR}
             tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
             /usr/bin/time -v ./runcmsgrid.sh 20 1 1 &
             cd ..
+        done
+    ;;
+    
+    CHECKTEST )
+        for PROC in ${PROCS[@]}
+        do
+            DIR=${PROC}-${SUFFIX}
+            echo ${DIR}
+            tail -n 10 TEST/${DIR}/cmsgrid_final.lhe
+            xmllint --noout --timing TEST/${DIR}/cmsgrid_final.lhe
         done
     ;;
     
@@ -151,7 +157,7 @@ case $WHAT in
         for PROC in ${PROCS[@]}
         do
             DIR=${PROC}-${SUFFIX}
-            rm -r ${DIR}; mkdir ${DIR}; cd ${DIR}
+            rm -rf ${DIR}; mkdir ${DIR}; cd ${DIR}
             tar -xzf ../../${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
             /usr/bin/time -v ./runcmsgrid.sh 800 1 1 &
             cd ..
@@ -249,18 +255,15 @@ case $WHAT in
     COPY )
         for PROC in ${PROCS[@]}
         do
-            echo ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz
-            echo ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz
-            echo ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz
             cp -p -v ${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
-            cp -p -v PACK_REDUCED/${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
-            cp -p -v PACK_REDUCED/${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
+            # cp -p -v PACK_REDUCED/${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-reducedrwl.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
+            # cp -p -v PACK_REDUCED/${PROC:0:1}j_${SCRAM_ARCH}_${CMSSW}_${PROC}-${SUFFIX}-norwl.tgz /afs/cern.ch/work/m/mseidel/public/MiNNLO-gridpacks/
         done
     ;;
     
     COPY_GRIDS )
-        OLDPATH=/afs/cern.ch/work/m/mseidel/generator/CMSSW_10_2_23/src/
-        OLDSUFFIX=powheg-MiNNLO31-svn3900-ew-rwl6-j${NJOBS}-st2fix-ana-hoppetweights-ymax20
+        OLDPATH=/afs/cern.ch/work/m/mseidel/generator/CMSSW_12_3_1/src/
+        OLDSUFFIX=powheg-MiNNLO31-svn3900-ew-rwl6-j${NJOBS}-st2fix-ana-hoppetweights-ymax20-pdf3
         for PROC in ${PROCS[@]}
         do
             cp ${OLDPATH}/${PROC}-${OLDSUFFIX}/*.dat ${PROC}-${SUFFIX}/
